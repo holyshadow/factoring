@@ -1,0 +1,12 @@
+composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName bg-poc-phase1
+
+composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile bg-poc-phase1@0.0.1.bna --file networkadmin.card
+
+composer card delete -n admin@bg-poc-phase1
+
+composer card import --file networkadmin.card
+
+
+composer-rest-server
+
+
