@@ -25,6 +25,9 @@ exports.list_PO = function(req, res){
   var sponsor = (req.param('sponsor'));
   var supplier = (req.param('supplier'));
 
+
+  console.log("sponnsor:" +sponsor);
+  console.log("supplier:" +supplier);
   if (!sponsor && !supplier){//list all PO
       client.get('/api/PurchaseOrder', function(err,req,resp,obj){
         assert.ifError(err);
@@ -33,6 +36,7 @@ exports.list_PO = function(req, res){
   }else if(!sponsor){//filter by supplier
       client.get('/api/PurchaseOrder', function(err,req,resp,obj){
         assert.ifError(err);
+        supplier = replaceAll(supplier," ","%20");
         var filtered = _.where(obj,{supplier: "resource:org.krungsri.factoring.User#"+supplier});
         
         res.json(AdjustPO(filtered));
@@ -40,7 +44,7 @@ exports.list_PO = function(req, res){
   }else if (!supplier){//filter by sponsor
       client.get('/api/PurchaseOrder', function(err,req,resp,obj){
         assert.ifError(err);
-        
+        sponsor = replaceAll(sponsor," ","%20");
         var filtered = _.where(obj,{sponsor: "resource:org.krungsri.factoring.User#"+sponsor});
        
         res.json(AdjustPO(filtered));
@@ -48,7 +52,8 @@ exports.list_PO = function(req, res){
   }else{// filter by sponsor and suplier
     client.get('/api/PurchaseOrder', function(err,req,resp,obj){
       assert.ifError(err);
-      
+      supplier = replaceAll(supplier," ","%20");
+      sponsor = replaceAll(sponsor," ","%20");
       var filtered = _.where(obj,{sponsor: "resource:org.krungsri.factoring.User#"+sponsor});
       filtered = _.where(filtered,{supplier: "resource:org.krungsri.factoring.User#"+supplier});
       res.json(AdjustPO(filtered));
@@ -59,7 +64,7 @@ exports.list_INV = function(req, res){
   var sponsor = (req.param('sponsor'));
   var supplier = (req.param('supplier'));
 
-  if (!sponsor && !supplier){//list all PO
+  if (!sponsor && !supplier){//list all Inv
     var Inv_data;
     var PO_data;
     var respond;
@@ -116,6 +121,7 @@ exports.list_INV = function(req, res){
     var PO_data;
     var respond;
     var respond_arr = [];
+    supplier = replaceAll(supplier," ","%20");
     new Promise((resolve, reject) => {
         client.get('/api/Invoice', function(err,req,resp,obj){
           assert.ifError(err);
@@ -144,8 +150,8 @@ exports.list_INV = function(req, res){
                     createdDate:  Invobj['createDate'],
                     status:  Invobj['currentStatus']
                   };
-                  respond.sponsor = Invobj['sponsor'].substring(Invobj['sponsor'].indexOf('#')+1);
-                  respond.supplier = Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1);
+                  respond.sponsor = replaceAll(Invobj['sponsor'].substring(Invobj['sponsor'].indexOf('#')+1),"%20"," ");
+                  respond.supplier = replaceAll(Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1),"%20"," ");
                   if(!!Invobj['updateDate']){
                         respond.updatedDate = Invobj['updateDate'];
                   }
@@ -170,6 +176,7 @@ exports.list_INV = function(req, res){
     var PO_data;
     var respond;
     var respond_arr = [];
+    sponsor = replaceAll(sponsor," ","%20");
     new Promise((resolve, reject) => {
         client.get('/api/Invoice', function(err,req,resp,obj){
           assert.ifError(err);
@@ -198,9 +205,8 @@ exports.list_INV = function(req, res){
                     createdDate:  Invobj['createDate'],
                     status:  Invobj['currentStatus']
                   };
-                  respond.sponsor = Invobj['sponsor'].substring(Invobj['sponsor'].indexOf('#')+1);
-                  respond.supplier = Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1);
-                  if(!!Invobj['updateDate']){
+                  respond.sponsor = replaceAll(Invobj['sponsor'].substring(Invobj['sponsor'].indexOf('#')+1),"%20"," ");
+                  respond.supplier = replaceAll(Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1),"%20"," ");                  if(!!Invobj['updateDate']){
                         respond.updatedDate = Invobj['updateDate'];
                   }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
@@ -224,6 +230,8 @@ exports.list_INV = function(req, res){
     var PO_data;
     var respond;
     var respond_arr = [];
+    sponsor = replaceAll(sponsor," ","%20");
+    supplier = replaceAll(supplier," ","%20");
     new Promise((resolve, reject) => {
         client.get('/api/Invoice', function(err,req,resp,obj){
           assert.ifError(err);
@@ -318,9 +326,9 @@ exports.list_FAC = function(req, res){
                         requestedAmount:  Facobj['reqAmount'],
                         createdDate:  Facobj['createDate'],
                         status:  Facobj['currentStatus'],
-                        bank:  Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),
-                        sponsor:  Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),
-                        supplier:  Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1)
+                        bank:  replaceAll(Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),"%20"," "),
+                        sponsor:  replaceAll(Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),"%20"," "),
+                        supplier:  replaceAll(Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1),"%20"," ")
                       };
                       if(!!Facobj['updateDate']){
                         respond.updatedDate = Facobj['updateDate'];
@@ -362,6 +370,7 @@ exports.list_FAC = function(req, res){
     var Fac_data;
     var respond;
     var respond_arr = [];
+    supplier = replaceAll(supplier," ","%20");
     new Promise((resolve, reject) => {
         client.get('/api/FactoringReq', function(err,req,resp,obj){
           assert.ifError(err);
@@ -394,9 +403,9 @@ exports.list_FAC = function(req, res){
                         requestedAmount:  Facobj['reqAmount'],
                         createdDate:  Facobj['createDate'],
                         status:  Facobj['currentStatus'],
-                        bank:  Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),
-                        sponsor:  Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),
-                        supplier:  Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1)
+                        bank:  replaceAll(Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),"%20"," "),
+                        sponsor:  replaceAll(Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),"%20"," "),
+                        supplier:  replaceAll(Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1),"%20"," ")
                       };
                       if(!!Facobj['updateDate']){
                         respond.updatedDate = Facobj['updateDate'];
@@ -438,6 +447,7 @@ exports.list_FAC = function(req, res){
     var Fac_data;
     var respond;
     var respond_arr = [];
+    bank = replaceAll(bank," ","%20");
     new Promise((resolve, reject) => {
         client.get('/api/FactoringReq', function(err,req,resp,obj){
           assert.ifError(err);
@@ -470,9 +480,9 @@ exports.list_FAC = function(req, res){
                         requestedAmount:  Facobj['reqAmount'],
                         createdDate:  Facobj['createDate'],
                         status:  Facobj['currentStatus'],
-                        bank:  Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),
-                        sponsor:  Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),
-                        supplier:  Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1)
+                        bank:  replaceAll(Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),"%20"," "),
+                        sponsor:  replaceAll(Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),"%20"," "),
+                        supplier:  replaceAll(Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1),"%20"," ")
                       };
                       if(!!Facobj['updateDate']){
                         respond.updatedDate = Facobj['updateDate'];
@@ -514,6 +524,8 @@ exports.list_FAC = function(req, res){
     var Fac_data;
     var respond;
     var respond_arr = [];
+    bank = replaceAll(bank," ","%20");
+    supplier = replaceAll(supplier," ","%20");
     new Promise((resolve, reject) => {
         client.get('/api/FactoringReq', function(err,req,resp,obj){
           assert.ifError(err);
@@ -639,8 +651,8 @@ exports.approve_INV = function(req, res) {
  };
 exports.approve_FAC = function(req, res) {
   
-   var FacId = req.body["factoringid"];
-   var amount = req.body["amount"];
+   var FacId = req.body["factoringId"];
+   var amount = req.body["approvedAmount"];
 
    var request = {
      $class: "org.krungsri.factoring.ApproveFactoring",
@@ -665,12 +677,12 @@ exports.approve_FAC = function(req, res) {
    
  };
 exports.register_PO = function(req, res) {
-  
+  console.log("Register PO");
    var POID = req.body["poNumber"];
    var sponsor = req.body["sponsor"];
    var supplier = req.body["supplier"];
    var detail = req.body["detail"];
-   var amount = req.body["amount"];
+   var amount = req.body["price"];
    var request = {
      $class: "org.krungsri.factoring.RequestPO",
      poId: POID,
@@ -681,7 +693,7 @@ exports.register_PO = function(req, res) {
      sponsor: sponsor,
      supplier: supplier
    };
-   
+   console.log(request);
    var respond;   
    client.post('/api/RequestPO', request, function(err, req, resp, data) {
      if(err){
@@ -694,6 +706,8 @@ exports.register_PO = function(req, res) {
        body: data
      };
      res.json(respond);
+     console.log("register PO complete");
+     console.log(respond);
    });
    
  };
@@ -704,7 +718,7 @@ exports.register_INV = function(req, res) {
    var sponsor = req.body["sponsor"];
    var supplier = req.body["supplier"];
    var detail = req.body["detail"];
-   var amount = req.body["amount"];
+   var amount = req.body["invoiceAmount"];
    var request = {
      $class: "org.krungsri.factoring.RequestInvoice",
      invId: InvNumber,
@@ -734,12 +748,12 @@ exports.register_INV = function(req, res) {
  };
 exports.register_FAC = function(req, res) {
   
-   var InvId = req.body["invoiceID"];
+   var InvId = req.body["invoiceId"];
    var InvNumber = req.body["invoiceNumber"];
    var sponsor = req.body["sponsor"];
    var bank = req.body["bank"];
-   var amount = req.body["amount"];
-
+   var amount = req.body["requestedAmount"];
+ console.log("invoice ID = " + InvId);
    new Promise((resolve, reject) => {
     client.get('/api/Invoice/'+InvId, function(err,req,resp,obj){
       assert.ifError(err);
@@ -747,7 +761,7 @@ exports.register_FAC = function(req, res) {
       var request = {
         $class: "org.krungsri.factoring.RequestFactoring",
         invId: InvId,
-        facId: bank+"_"+InvId,
+        facId: "factoring_"+InvId,
         createDate: Date.now(),
         reqAmount: amount,
         sponsor: sponsor,
@@ -816,17 +830,21 @@ function AdjustPO(obj){
       poId: temp[i]['poId'],
       poNumber: temp[i]['poNumber'],
       detail:  temp[i]['detail'],
-      amount:  temp[i]['poAmount'],
+      price:  temp[i]['poAmount'],
       createDate:  temp[i]['createDate'],
       status:  temp[i]['currentStatus']
     };
-    respond.sponsor = temp[i]['sponsor'].substring(temp[i]['sponsor'].indexOf('#')+1);
-    respond.supplier = temp[i]['supplier'].substring(temp[i]['supplier'].indexOf('#')+1);
+    respond.sponsor = replaceAll(temp[i]['sponsor'].substring(temp[i]['sponsor'].indexOf('#')+1),"%20"," ");
+    respond.supplier = replaceAll(temp[i]['supplier'].substring(temp[i]['supplier'].indexOf('#')+1),"%20"," ");
     if(!!temp[i]['updateDate']){
       respond.updatedDate = temp[i]['updateDate'];
     }
     respond_arr.push(respond);
     
   }
+  console.log(respond_arr);
   return respond_arr;
  }
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
