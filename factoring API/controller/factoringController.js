@@ -94,13 +94,13 @@ exports.list_INV = function(req, res){
                     invoiceNumber: Invobj['invoiceNumber'],
                     invoiceDetail:  Invobj['detailInvoive'],
                     invoiceAmount:  Invobj['invoiceAmount'],
-                    createdDate:  Invobj['createDate'],
+                    createdDate:  formatDate(Invobj['createDate']),
                     status:  Invobj['currentStatus']
                   };
                   respond.sponsor = Invobj['sponsor'].substring(Invobj['sponsor'].indexOf('#')+1);
                   respond.supplier = Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1);
                   if(!!Invobj['updateDate']){
-                        respond.updatedDate = Invobj['updateDate'];
+                        respond.updatedDate = formatDate(Invobj['updateDate']);
                   }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
                   for(var j=0 ; j<PO_data.length;j++){
@@ -147,13 +147,13 @@ exports.list_INV = function(req, res){
                     invoiceNumber: Invobj['invoiceNumber'],
                     invoiceDetail:  Invobj['detailInvoive'],
                     invoiceAmount:  Invobj['invoiceAmount'],
-                    createdDate:  Invobj['createDate'],
+                    createdDate:  formatDate(Invobj['createDate']),
                     status:  Invobj['currentStatus']
                   };
                   respond.sponsor = replaceAll(Invobj['sponsor'].substring(Invobj['sponsor'].indexOf('#')+1),"%20"," ");
                   respond.supplier = replaceAll(Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1),"%20"," ");
                   if(!!Invobj['updateDate']){
-                        respond.updatedDate = Invobj['updateDate'];
+                        respond.updatedDate = formatDate(Invobj['updateDate']);
                   }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
                   for(var j=0 ; j<PO_data.length;j++){
@@ -202,12 +202,13 @@ exports.list_INV = function(req, res){
                     invoiceNumber: Invobj['invoiceNumber'],
                     invoiceDetail:  Invobj['detailInvoive'],
                     invoiceAmount:  Invobj['invoiceAmount'],
-                    createdDate:  Invobj['createDate'],
+                    createdDate:  formatDate(Invobj['createDate']),
                     status:  Invobj['currentStatus']
                   };
                   respond.sponsor = replaceAll(Invobj['sponsor'].substring(Invobj['sponsor'].indexOf('#')+1),"%20"," ");
-                  respond.supplier = replaceAll(Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1),"%20"," ");                  if(!!Invobj['updateDate']){
-                        respond.updatedDate = Invobj['updateDate'];
+                  respond.supplier = replaceAll(Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1),"%20"," ");                  
+                  if(!!Invobj['updateDate']){
+                        respond.updatedDate = formatDate(Invobj['updateDate']);
                   }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
                   for(var j=0 ; j<PO_data.length;j++){
@@ -258,13 +259,13 @@ exports.list_INV = function(req, res){
                     invoiceNumber: Invobj['invoiceNumber'],
                     invoiceDetail:  Invobj['detailInvoive'],
                     invoiceAmount:  Invobj['invoiceAmount'],
-                    createdDate:  Invobj['createDate'],
+                    createdDate:  formatDate(Invobj['createDate']),
                     status:  Invobj['currentStatus']
                   };
                   respond.sponsor = Invobj['sponsor'].substring(Invobj['sponsor'].indexOf('#')+1);
                   respond.supplier = Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1);
                   if(!!Invobj['updateDate']){
-                        respond.updatedDate = Invobj['updateDate'];
+                        respond.updatedDate = formatDate(Invobj['updateDate']);
                   }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
                   for(var j=0 ; j<PO_data.length;j++){
@@ -324,14 +325,14 @@ exports.list_FAC = function(req, res){
                       var respond = {
                         factoringId: Facobj['facId'],                      
                         requestedAmount:  Facobj['reqAmount'],
-                        createdDate:  Facobj['createDate'],
+                        createdDate:  formatDate(Facobj['createDate']),
                         status:  Facobj['currentStatus'],
                         bank:  replaceAll(Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),"%20"," "),
                         sponsor:  replaceAll(Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),"%20"," "),
                         supplier:  replaceAll(Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1),"%20"," ")
                       };
                       if(!!Facobj['updateDate']){
-                        respond.updatedDate = Facobj['updateDate'];
+                        respond.updatedDate = formatDate(Facobj['updateDate']);
                       }
                       if(!!Facobj['approveAmount']){
                         respond.approvedAmount = Facobj['approveAmount'];
@@ -401,14 +402,14 @@ exports.list_FAC = function(req, res){
                       var respond = {
                         factoringId: Facobj['facId'],                      
                         requestedAmount:  Facobj['reqAmount'],
-                        createdDate:  Facobj['createDate'],
+                        createdDate:  formatDate(Facobj['createDate']),
                         status:  Facobj['currentStatus'],
                         bank:  replaceAll(Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),"%20"," "),
                         sponsor:  replaceAll(Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),"%20"," "),
                         supplier:  replaceAll(Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1),"%20"," ")
                       };
                       if(!!Facobj['updateDate']){
-                        respond.updatedDate = Facobj['updateDate'];
+                        respond.updatedDate = formatDate(Facobj['updateDate']);
                       }
                       if(!!Facobj['approveAmount']){
                         respond.approvedAmount = Facobj['approveAmount'];
@@ -478,14 +479,14 @@ exports.list_FAC = function(req, res){
                       var respond = {
                         factoringId: Facobj['facId'],                      
                         requestedAmount:  Facobj['reqAmount'],
-                        createdDate:  Facobj['createDate'],
+                        createdDate:  formatDate(Facobj['createDate']),
                         status:  Facobj['currentStatus'],
                         bank:  replaceAll(Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),"%20"," "),
                         sponsor:  replaceAll(Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),"%20"," "),
                         supplier:  replaceAll(Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1),"%20"," ")
                       };
                       if(!!Facobj['updateDate']){
-                        respond.updatedDate = Facobj['updateDate'];
+                        respond.updatedDate = formatDate(Facobj['updateDate']);
                       }
                       if(!!Facobj['approveAmount']){
                         respond.approvedAmount = Facobj['approveAmount'];
@@ -557,14 +558,14 @@ exports.list_FAC = function(req, res){
                       var respond = {
                         factoringId: Facobj['facId'],                      
                         requestedAmount:  Facobj['reqAmount'],
-                        createdDate:  Facobj['createDate'],
+                        createdDate:  formatDate(Facobj['createDate']),
                         status:  Facobj['currentStatus'],
                         bank:  Facobj['bank'].substring(Facobj['bank'].indexOf('#')+1),
                         sponsor:  Facobj['sponsor'].substring(Facobj['sponsor'].indexOf('#')+1),
                         supplier:  Facobj['supplier'].substring(Facobj['supplier'].indexOf('#')+1)
                       };
                       if(!!Facobj['updateDate']){
-                        respond.updatedDate = Facobj['updateDate'];
+                        respond.updatedDate = formatDate(Facobj['updateDate']);
                       }
                       if(!!Facobj['approveAmount']){
                         respond.approvedAmount = Facobj['approveAmount'];
@@ -831,7 +832,7 @@ function AdjustPO(obj){
       poNumber: temp[i]['poNumber'],
       detail:  temp[i]['detail'],
       price:  temp[i]['poAmount'],
-      createDate:  temp[i]['createDate'],
+      createDate:  formatDate(temp[i]['createDate']),
       status:  temp[i]['currentStatus']
     };
     respond.sponsor = replaceAll(temp[i]['sponsor'].substring(temp[i]['sponsor'].indexOf('#')+1),"%20"," ");
@@ -847,4 +848,15 @@ function AdjustPO(obj){
  }
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
+}
+function formatDate(pDate){
+    var strDate;
+    var d,m,y;
+    var date = new Date(pDate);
+    d = date.getDate().toString();
+    m = date.getMonth().toString();
+    y = date.getFullYear().toString();
+    strDate = d.padStart(2,"0") + "/" + m.padStart(2,"0") + "/" + y;
+    
+    return strDate;
 }
