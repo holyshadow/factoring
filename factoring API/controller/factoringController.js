@@ -102,6 +102,9 @@ exports.list_INV = function(req, res){
                   if(!!Invobj['updateDate']){
                         respond.updatedDate = formatDate(Invobj['updateDate']);
                   }
+                  else{
+                        respond.updatedDate = respond.createdDate;
+                  }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
                   for(var j=0 ; j<PO_data.length;j++){
                       if(POID == PO_data[j]['poId']){
@@ -154,6 +157,9 @@ exports.list_INV = function(req, res){
                   respond.supplier = replaceAll(Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1),"%20"," ");
                   if(!!Invobj['updateDate']){
                         respond.updatedDate = formatDate(Invobj['updateDate']);
+                  }
+                  else{
+                    respond.updatedDate = respond.createdDate;
                   }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
                   for(var j=0 ; j<PO_data.length;j++){
@@ -209,6 +215,9 @@ exports.list_INV = function(req, res){
                   respond.supplier = replaceAll(Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1),"%20"," ");                  
                   if(!!Invobj['updateDate']){
                         respond.updatedDate = formatDate(Invobj['updateDate']);
+                  }
+                  else{
+                    respond.updatedDate = respond.createdDate;
                   }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
                   for(var j=0 ; j<PO_data.length;j++){
@@ -266,6 +275,9 @@ exports.list_INV = function(req, res){
                   respond.supplier = Invobj['supplier'].substring(Invobj['supplier'].indexOf('#')+1);
                   if(!!Invobj['updateDate']){
                         respond.updatedDate = formatDate(Invobj['updateDate']);
+                  }
+                  else{
+                    respond.updatedDate = respond.createdDate;
                   }
                   var POID = Invobj['poId'].substring(Invobj['poId'].indexOf('#')+1);
                   for(var j=0 ; j<PO_data.length;j++){
@@ -333,6 +345,9 @@ exports.list_FAC = function(req, res){
                       };
                       if(!!Facobj['updateDate']){
                         respond.updatedDate = formatDate(Facobj['updateDate']);
+                      }
+                      else{
+                        respond.updatedDate = respond.createdDate;
                       }
                       if(!!Facobj['approveAmount']){
                         respond.approvedAmount = Facobj['approveAmount'];
@@ -411,6 +426,9 @@ exports.list_FAC = function(req, res){
                       if(!!Facobj['updateDate']){
                         respond.updatedDate = formatDate(Facobj['updateDate']);
                       }
+                      else{
+                        respond.updatedDate = respond.createdDate;
+                      }
                       if(!!Facobj['approveAmount']){
                         respond.approvedAmount = Facobj['approveAmount'];
                       }
@@ -487,6 +505,9 @@ exports.list_FAC = function(req, res){
                       };
                       if(!!Facobj['updateDate']){
                         respond.updatedDate = formatDate(Facobj['updateDate']);
+                      }
+                      else{
+                        respond.updatedDate = respond.createdDate;
                       }
                       if(!!Facobj['approveAmount']){
                         respond.approvedAmount = Facobj['approveAmount'];
@@ -566,6 +587,9 @@ exports.list_FAC = function(req, res){
                       };
                       if(!!Facobj['updateDate']){
                         respond.updatedDate = formatDate(Facobj['updateDate']);
+                      }
+                      else{
+                        respond.updatedDate = respond.createdDate;
                       }
                       if(!!Facobj['approveAmount']){
                         respond.approvedAmount = Facobj['approveAmount'];
@@ -832,13 +856,16 @@ function AdjustPO(obj){
       poNumber: temp[i]['poNumber'],
       detail:  temp[i]['detail'],
       price:  temp[i]['poAmount'],
-      createDate:  formatDate(temp[i]['createDate']),
+      createdDate: new Date(temp[i]['createDate']).toISOString(),
       status:  temp[i]['currentStatus']
     };
     respond.sponsor = replaceAll(temp[i]['sponsor'].substring(temp[i]['sponsor'].indexOf('#')+1),"%20"," ");
     respond.supplier = replaceAll(temp[i]['supplier'].substring(temp[i]['supplier'].indexOf('#')+1),"%20"," ");
     if(!!temp[i]['updateDate']){
       respond.updatedDate = temp[i]['updateDate'];
+    }
+    else{
+      respond.updatedDate = respond.createdDate;
     }
     respond_arr.push(respond);
     
@@ -851,12 +878,7 @@ function replaceAll(str, find, replace) {
 }
 function formatDate(pDate){
     var strDate;
-    var d,m,y;
     var date = new Date(pDate);
-    d = date.getDate().toString();
-    m = date.getMonth().toString();
-    y = date.getFullYear().toString();
-    strDate = d.padStart(2,"0") + "/" + m.padStart(2,"0") + "/" + y;
-    
+    strDate = date.toISOString();
     return strDate;
 }
